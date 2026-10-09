@@ -11,7 +11,7 @@
 
 ## Fallen
 - Ein einmal gestartetes/beendetes Image war danach kaputt (`cannot register existing type 'GtkListViewAdapterItemFactory'`). `start.sh` kopiert deshalb immer frisch von `base.image`. Prozess mit `kill -9` beenden.
-- Nicht mit stlive verbunden: stlive startet 13er-VM headless ohne Worker. Fuer Live-Entwicklung braucht die CLI: Pharo-14-Image + VM waehlbar, Worker-Modus-Start, Transcript-Fix (siehe ../CLI-ANFORDERUNGEN.md).
+- Nicht mit stlive verbunden: stlive startet 13er-VM headless ohne Worker. Fuer Live-Entwicklung braucht die CLI: Pharo-14-Image + VM waehlbar, Worker-Modus-Start, Transcript-Fix.
 - **Windows: laut Spec-Gtk-README derzeit nicht lauffaehig.** Nicht getestet.
 
 ## Aussehen
