@@ -1,5 +1,5 @@
 "
-HTTP-UI: Zinc-Server im Image, HTML/CSS im Fenster ausserhalb von Pharo
+HTTP UI: a Zinc server inside the image; HTML/CSS shown in a window outside of Pharo
 "
 Class {
 	#name : 'WebHello',

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Einmalig: Pharo 14 (Image + passende VM) holen, Spec-Gtk laden, als base.image ablegen.
-# Vorher: brew install gtk4 gtksourceview5
+# One-time setup: fetch Pharo 14 (image + matching VM), load Spec-Gtk, store as base.image.
+# Before: brew install gtk4 gtksourceview5
 set -e; cd "$(dirname "$0")"; mkdir -p p14; cd p14
 curl -s https://get.pharo.org/64/140 | bash
 curl -s https://get.pharo.org/64/vm140 | bash
@@ -10,4 +10,4 @@ Smalltalk snapshot: true andQuit: true.
 ST
 ./pharo-vm/Pharo.app/Contents/MacOS/Pharo --headless Pharo.image st load.st --save --quit
 cp Pharo.image base.image; cp Pharo.changes base.changes
-echo "fertig. Start: ../start.sh"
+echo "done. Start with: ../start.sh"

@@ -1,5 +1,5 @@
 "
-Kleines Fenster mit einem Knopf
+A small window with a button
 "
 Class {
 	#name : 'HelloPresenter',

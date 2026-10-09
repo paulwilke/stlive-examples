@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Oeffnet die UI als eigenes App-Fenster (ohne Tabs/Adressleiste) - ausserhalb von Pharo.
+# Opens the UI in its own app window (no tabs, no address bar), outside of Pharo.
 URL=${1:-http://localhost:8765}
 case "$(uname)" in
   Darwin) open -na "Google Chrome" --args --app="$URL" --window-size=520,360 --user-data-dir="${TMPDIR:-/tmp}/webhello-profile" ;;

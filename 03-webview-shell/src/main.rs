@@ -1,4 +1,4 @@
-// Native Huelle: eigenes Fenster mit System-Webview (WKWebView / WebView2), startet Pharo headless als Sidecar.
+// Native shell: own window with the system webview (WKWebView / WebView2); starts Pharo headless as a sidecar.
 use std::{net::TcpStream, path::PathBuf, process::{Command, Stdio}, thread::sleep, time::{Duration, Instant}};
 use tao::{event::{Event, WindowEvent}, event_loop::{ControlFlow, EventLoop}, window::WindowBuilder, dpi::LogicalSize};
 use wry::WebViewBuilder;
@@ -6,7 +6,7 @@ use wry::WebViewBuilder;
 const PORT: u16 = 8765;
 
 fn main() {
-    // Im .app-Bundle: Contents/Resources/pharo (VM + Image). Sonst Entwicklungsmodus mit ~/.stlive.
+    // Inside the .app bundle: Contents/Resources/pharo (VM + image). Otherwise development mode using ~/.stlive.
     let exe = std::env::current_exe().unwrap();
     let bundled = exe.parent().and_then(|p| p.parent()).map(|c| c.join("Resources/pharo")).filter(|p| p.exists());
     let (vm, image, work, script) = if let Some(r) = bundled {

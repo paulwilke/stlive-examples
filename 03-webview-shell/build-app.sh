@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Baut HelloShell.app: Rust-Hülle + Pharo-VM + vorbereitetes Image (WebHello eingebaut). Kunde braucht nichts zu installieren.
+# Builds HelloShell.app: Rust shell + Pharo VM + prepared image (WebHello built in). The end user installs nothing.
 set -e; cd "$(dirname "$0")"
 P=${STLIVE_HOME:-$HOME/.stlive}/pharo
 cargo build --release
@@ -7,7 +7,7 @@ APP=dist/HelloShell.app; rm -rf dist; R=$APP/Contents/Resources/pharo
 mkdir -p $APP/Contents/MacOS $R
 cp target/release/hello-shell $APP/Contents/MacOS/
 cp -R $P/pharo-vm $R/
-# Image vorbereiten: Code laden, speichern
+# Prepare the image: load the code, save the snapshot
 mkdir -p .prep && cp $P/Pharo.image $P/Pharo.changes $P/*.sources .prep/
 cat > .prep/prepare.st <<'ST'
 Metacello new baseline: 'WebHello'; repository: 'tonel://', (FileLocator workingDirectory parent parent / '02-web-window' / 'src') fullName; load.

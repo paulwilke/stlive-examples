@@ -1,21 +1,20 @@
-# Weg 04: Spec2 + GTK4 (getestet auf macOS arm64, 2026-10-09)
+# Way 04: Spec2 + GTK4 (tested on macOS arm64, 2026-10-09)
 
-**Ergebnis: funktioniert.** Eigenes OS-Fenster ohne Pharo-Welt, Spec2-Presenter aus Demo 01 unveraendert, Button-Klick geht, Theming per GTK-CSS (`app addCSSProviderFromString:`) geht (Verlauf, runde gruene Buttons).
+**Result: it works.** Own OS window without the Pharo world, the Spec2 presenter from demo 01 unchanged, the button click works, and theming via GTK CSS (`app addCSSProviderFromString:`) works (gradient, rounded green buttons).
 
-## Voraussetzungen (alles lief erst nach diesen Schritten)
-1. `brew install gtk4 gtksourceview5` (gtk+3 reicht nicht; gtksourceview5 wird schon beim Start angebunden).
-2. **Pharo 14** (nicht 13): Image + **passende 14er-VM**. Eine 13er-VM mit 14er-Image stuerzt ab (Segfault in `GtkCairoSurface>>fill:`).
-   `p14/` anlegen: `curl https://get.pharo.org/64/140 | bash` und `curl https://get.pharo.org/64/vm140 | bash`.
-3. Spec-Gtk einmal ins Image laden (`p14/load.st`), Ergebnis als `base.image`/`base.changes` ablegen. Siehe unten, warum.
-4. Start mit `--worker --headless` (nicht `--worker` allein: dann zeigt Pharo zusaetzlich seine Morphic-Welt ueber GTK, mit Fehlerflut `GRunLoop defer:`). `--no-quit` kennt die 14er-VM nicht.
+## Requirements (it only ran after all of these)
+1. `brew install gtk4 gtksourceview5` (GTK 3 is not enough; gtksourceview5 is bound at startup).
+2. **Pharo 14** (not 13): image plus the **matching 14 VM**. A 13 VM with a 14 image crashes (segfault in `GtkCairoSurface>>fill:`). `./setup.sh` fetches both into `p14/`.
+3. Load Spec-Gtk into the image once (`setup.sh` does this) and keep the result as `base.image` / `base.changes`.
+4. Start with `--worker --headless`. `--worker` alone additionally shows Pharo's Morphic world through GTK and floods the log with errors (`GRunLoop defer:`). The 14 VM does not know `--no-quit`.
 
-## Fallen
-- Ein einmal gestartetes/beendetes Image war danach kaputt (`cannot register existing type 'GtkListViewAdapterItemFactory'`). `start.sh` kopiert deshalb immer frisch von `base.image`. Prozess mit `kill -9` beenden.
-- Nicht mit stlive verbunden: stlive startet 13er-VM headless ohne Worker. Fuer Live-Entwicklung braucht die CLI: Pharo-14-Image + VM waehlbar, Worker-Modus-Start, Transcript-Fix.
-- **Windows: laut Spec-Gtk-README derzeit nicht lauffaehig.** Nicht getestet.
+## Pitfalls
+- An image that had been started and stopped once was broken afterwards (`cannot register existing type 'GtkListViewAdapterItemFactory'`). `start.sh` therefore always copies a fresh `base.image`. Stop the process with `kill -9`.
+- Not connected to stlive: stlive starts a Pharo 13 VM headless without worker mode. Live development here would need Pharo 14 image and VM selectable, a worker-mode start, and a GTK-aware UI thread.
+- **Windows: according to the Spec-Gtk README it currently does not work.** Not tested.
 
-## Aussehen
-GTK4 auf macOS: Fenster mit normalen macOS-Fensterknoepfen, Widgets wirken mac-aehnlich (hell, abgerundet). Per CSS frei gestaltbar, aber nicht so frei wie HTML/CSS.
+## Look
+GTK4 on macOS: window with the normal macOS window buttons, widgets look Mac-like (light, rounded). Freely stylable via CSS, though not as freely as HTML/CSS.
 
-## Auslieferung (offen)
-Brauchte mindestens: GTK4, gtksourceview5, graphene, librsvg und deren Abhaengigkeiten als dylibs im Paket, Pfade umbiegen (Spec-Gtk sucht unter /opt/homebrew, "paths are fixed for now" laut README), plus 14er-VM und Image. Nicht gebaut, erwarte deutlich mehr Aufwand als Weg 03.
+## Shipping (open)
+At least GTK4, gtksourceview5, graphene, librsvg and their dependencies would have to be bundled as dylibs, with paths rewritten (Spec-Gtk looks under /opt/homebrew, "paths are fixed for now" according to its README), plus the 14 VM and the image. Not built; expect much more work than way 03.
