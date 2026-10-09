@@ -15,7 +15,7 @@ Class {
 { #category : 'actions' }
 HelloPresenter >> click [
 	count := count + 1.
-	label label: 'Hallo aus Smalltalk! Klicks: ', count printString
+	label label: 'Hello from Smalltalk! Clicks: ', count printString
 ]
 
 { #category : 'accessing' }
@@ -26,8 +26,8 @@ HelloPresenter >> count [
 { #category : 'initialization' }
 HelloPresenter >> initializePresenters [
 	count := 0.
-	label := self newLabel label: 'Noch nicht geklickt'.
-	button := self newButton label: 'Klick mich!'; action: [ self click ]; yourself.
+	label := self newLabel label: 'Not clicked yet'.
+	button := self newButton label: 'Click me!'; action: [ self click ]; yourself.
 	self layout: (SpBoxLayout newTopToBottom spacing: 10; borderWidth: 15; add: label; add: button expand: false; yourself)
 ]
 

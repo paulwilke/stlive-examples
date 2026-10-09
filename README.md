@@ -2,7 +2,7 @@
 
 This repo shows how to build a small desktop app (a window with a label and a button) from Pharo/Smalltalk, and which route to choose for an app you can actually ship and that looks good. It also shows what you can do with `stlive`. Everything was built in a single session with an AI assistant (Claude Code), the `stlive` skill and the [`stlive` CLI](https://github.com/paulwilke/smalltalk-live-cli). The demo is deliberately tiny: a label, a button, a counter.
 
-Tested on **macOS (Apple Silicon)** only. Windows has not been tried. The UI texts and screenshots are in German; they will be redone in English in a later version.
+Tested on **macOS (Apple Silicon)** only. Windows has not been tried. All UI texts are in English.
 
 ## The four ways at a glance
 
@@ -13,17 +13,20 @@ Tested on **macOS (Apple Silicon)** only. Windows has not been tried. The UI tex
 | 03 | Web server + own Rust shell (wry/tao) using the system webview | own OS window, a single `.app` | free (CSS) | **`HelloShell.app`, 143 MB, nothing to install** | works, **recommended** |
 | 04 | Spec2 with the GTK4 backend | own OS window | GTK4, themable via CSS | hard, GTK dylibs required | works on macOS; Windows currently not supported by Spec-Gtk |
 
-### Screenshots
+### Before and after one click
 
-| 01 Spec2 / Morphic | 02 Web UI in a Chrome app window | 03 Own `.app` |
+All four ways run the same tiny app. Each window is shown at its real size, before and after one click on "Click me!":
+
+![The four ways, before and after a click](docs/overview.png)
+
+| | Before click | After click |
 |---|---|---|
-| ![01](docs/01-spec-morphic.jpg) | ![02](docs/02-web-window.jpg) | ![03](docs/03-webview-shell-clicked.jpg) |
+| **01** Spec2 / Morphic | ![](docs/img/01-spec-morphic-before.png) | ![](docs/img/01-spec-morphic-after.png) |
+| **02** Web UI + Chrome app window | ![](docs/img/02-web-window-before.png) | ![](docs/img/02-web-window-after.png) |
+| **03** Native `.app` (system webview) | ![](docs/img/03-webview-shell-before.png) | ![](docs/img/03-webview-shell-after.png) |
+| **04** Spec2 / GTK4 (CSS-themed) | ![](docs/img/04-spec-gtk-before.png) | ![](docs/img/04-spec-gtk-after.png) |
 
-| 04 Spec2 / GTK4 (default) | 04 after a click | 04 with CSS theming |
-|---|---|---|
-| ![04](docs/04-spec-gtk.jpg) | ![04 click](docs/04-spec-gtk-clicked.jpg) | ![04 css](docs/04-spec-gtk-css.jpg) |
-
-In 02 and 03 the button is green because its colour was changed at runtime through `stlive` while the window was open.
+How they were captured: 01 with `stlive` 0.5.0 itself (`start --gui`, `eval --ui`, `ui press`, `ui screenshot`); 02 and 03 with the macOS window capture of the real windows after a real click; 04 with the window capture after the click action was triggered inside the image (`button click`), because the GTK window is not driven by `stlive`. The window in 04 is a separate Pharo 14 process.
 
 ## How we got there with `stlive`
 
@@ -36,7 +39,7 @@ In 02 and 03 the button is green because its colour was changed at runtime throu
    stlive method compile HelloPresenter --protocol actions - <<'EOF'
    click
        count := count + 1.
-       label label: 'Hallo aus Smalltalk! Klicks: ', count printString
+       label label: 'Hello from Smalltalk! Clicks: ', count printString
    EOF
    ```
 3. **Try it immediately** with `stlive eval` (the counter logic was checked without a window: two clicks give 2).
@@ -46,14 +49,14 @@ In 02 and 03 the button is green because its colour was changed at runtime throu
 
 ## Pitfalls
 
-- **`stlive start` is headless.** Ways 01 and 04 need a second Pharo with a window. `stlive` 0.4.0 adds `start --gui` and `ui screenshot/press` for this; that was not tested through here (see version below).
+- **`stlive start` is headless.** Ways 01 and 04 need a second Pharo with a window. `stlive` 0.4.0+ adds `start --gui` and `ui screenshot/press` for this. Way 01 was re-checked with 0.5.0: the window opens, `ui press` clicks the button and `ui screenshot` captures the result. These commands only understand Morphic, so they do not drive way 04 (GTK).
 - **Spec-Gtk needs** GTK **4** (not 3), gtksourceview5, **Pharo 14** with the matching VM, and must be started with `--worker --headless`. An image that had been run once was broken afterwards, so `04-spec-gtk/start.sh` always copies a fresh `base.image`. On Windows Spec-Gtk does not currently work according to its README.
 - **The `.app`** is unsigned; the first start took about 20 seconds. On other Macs Gatekeeper will probably ask (not checked).
 
 ## Tested version
 
-- `stlive` from [paulwilke/smalltalk-live-cli](https://github.com/paulwilke/smalltalk-live-cli), state **0.4.0** (commit `2c34e4e`). The demos themselves were built with a binary that still reported itself as 0.3.1 (headless; `init`, `start`, `eval`, `class create`, `method compile`, `save`). The GUI features of 0.4.0 are not part of these demos.
-- Pharo 13 (ways 01–03), Pharo 14 (way 04), macOS on Apple Silicon.
+- `stlive` from [paulwilke/smalltalk-live-cli](https://github.com/paulwilke/smalltalk-live-cli), **0.5.0** (built from the working tree, newer than commit `2c34e4e`). Used here: `start`, `start --gui`, `load`, `eval`, `eval --ui`, `method compile`, `ui windows`, `ui screenshot`, `ui press`, `open-ui`, `stop`. The first versions of the demos were built with a binary that still reported itself as 0.3.1.
+- Pharo 13 (ways 01-03), Pharo 14 (way 04), macOS on Apple Silicon.
 
 ## Try it yourself
 

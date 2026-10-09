@@ -24,11 +24,11 @@ fn main() {
     };
     let mut child = Command::new(vm).current_dir(&work)
         .arg("--headless").arg(&image).arg("st").arg(&script).arg("--no-quit")
-        .stdout(std::fs::File::create(work.join("pharo.log")).unwrap()).stderr(Stdio::null()).spawn().expect("Pharo startet nicht");
+        .stdout(std::fs::File::create(work.join("pharo.log")).unwrap()).stderr(Stdio::null()).spawn().expect("Pharo failed to start");
 
     let start = Instant::now();
     while TcpStream::connect(("127.0.0.1", PORT)).is_err() {
-        if start.elapsed() > Duration::from_secs(60) { let _ = child.kill(); panic!("Server kommt nicht hoch"); }
+        if start.elapsed() > Duration::from_secs(60) { let _ = child.kill(); panic!("Server did not come up"); }
         sleep(Duration::from_millis(200));
     }
 

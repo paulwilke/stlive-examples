@@ -22,4 +22,4 @@ cat > $APP/Contents/Info.plist <<'PL'
 <key>CFBundleExecutable</key><string>hello-shell</string><key>CFBundlePackageType</key><string>APPL</string><key>CFBundleVersion</key><string>1</string>
 <key>NSHighResolutionCapable</key><true/><key>LSMinimumSystemVersion</key><string>12.0</string></dict></plist>
 PL
-echo "fertig: $APP ($(du -sh $APP | cut -f1))"
+echo "done: $APP ($(du -sh $APP | cut -f1))"
