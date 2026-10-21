@@ -11,7 +11,7 @@ This repository contains **no** third-party binaries or source. The following is
 | wry, tao (Rust crates, Tauri project) | 03 | Apache-2.0 / MIT, see each crate | https://github.com/tauri-apps |
 | GTK 4, gtksourceview 5, librsvg | 04 | LGPL-2.1+ | via Homebrew |
 | graphene | 04 | MIT | via Homebrew |
-| stlive (CLI and skill) | development workflow | MIT | https://github.com/paulwilke/smalltalk-live-cli |
+| stlive (CLI and skill) | development workflow | MIT | https://github.com/paulwilke/stlive |
 | Google Chrome / Microsoft Edge | 02 | proprietary, not distributed | only launched if installed |
 
 This list is a convenience, not legal advice; the license files of each project are authoritative. Pharo and the Pharo logo are trademarks of their respective owners; the screenshots in `docs/` show only the demo windows.

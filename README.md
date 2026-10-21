@@ -1,6 +1,6 @@
-# stlive-gui: four ways to ship a Pharo app with a window
+# stlive-examples: four ways to ship a Pharo app with a window
 
-This repo shows how to build a small desktop app (a window with a label and a button) from Pharo/Smalltalk, and which route to choose for an app you can actually ship and that looks good. It also shows what you can do with `stlive`. Everything was built in a single session with an AI assistant (Claude Code), the `stlive` skill and the [`stlive` CLI](https://github.com/paulwilke/smalltalk-live-cli). The demo is deliberately tiny: a label, a button, a counter.
+This repo shows how to build a small desktop app (a window with a label and a button) from Pharo/Smalltalk, and which route to choose for an app you can actually ship and that looks good. It also shows what you can do with `stlive`. Everything was built in a single session with an AI assistant (Claude Code), the `stlive` skill and the [`stlive` CLI](https://github.com/paulwilke/stlive). The demo is deliberately tiny: a label, a button, a counter.
 
 Tested on **macOS (Apple Silicon)** only. Windows has not been tried. All UI texts are in English.
 
@@ -55,12 +55,12 @@ How they were captured: 01 with `stlive` 0.5.0 itself (`start --gui`, `eval --ui
 
 ## Tested version
 
-- `stlive` from [paulwilke/smalltalk-live-cli](https://github.com/paulwilke/smalltalk-live-cli), **0.5.0** (built from the working tree, newer than commit `2c34e4e`). Used here: `start`, `start --gui`, `load`, `eval`, `eval --ui`, `method compile`, `ui windows`, `ui screenshot`, `ui press`, `open-ui`, `stop`. The first versions of the demos were built with a binary that still reported itself as 0.3.1.
+- `stlive` from [paulwilke/stlive](https://github.com/paulwilke/stlive), **0.5.0** (built from the working tree, newer than commit `2c34e4e`). Used here: `start`, `start --gui`, `load`, `eval`, `eval --ui`, `method compile`, `ui windows`, `ui screenshot`, `ui press`, `open-ui`, `stop`. The first versions of the demos were built with a binary that still reported itself as 0.3.1. The examples have not been re-run with later versions (current: 0.8.0); `start --gui`, `ui …`, `open-ui` and `image export` used here still exist unchanged.
 - Pharo 13 (ways 01-03), Pharo 14 (way 04), macOS on Apple Silicon.
 
 ## Try it yourself
 
-Requirements: macOS, [`stlive`](https://github.com/paulwilke/smalltalk-live-cli) (run `stlive init` once; it downloads Pharo 13 into `~/.stlive`), a Rust toolchain for 03, and `brew install gtk4 gtksourceview5` for 04.
+Requirements: macOS, [`stlive`](https://github.com/paulwilke/stlive) (run `stlive init` once; it downloads Pharo 13 into `~/.stlive`), a Rust toolchain for 03, and `brew install gtk4 gtksourceview5` for 04.
 
 ```bash
 # 01 Spec2 in Morphic
